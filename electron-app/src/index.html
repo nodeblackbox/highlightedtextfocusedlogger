@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Highlight Reader</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", system-ui, sans-serif;
+    background: #14141f; color: #e6e6f0; margin: 0; padding: 20px;
+  }
+  h1 { font-size: 1.05rem; margin: 0 0 2px; }
+  .sub { color: #7c7c94; font-size: .75rem; margin-bottom: 16px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: #22222f; border: 1px solid #33334a; border-radius: 999px;
+    padding: 6px 14px; font-size: .85rem; margin-bottom: 16px;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: #555; }
+  .pill.speaking .dot, .pill.synthesizing .dot { background: #4caf50; box-shadow: 0 0 8px #4caf50; }
+  .pill.reading-selection .dot { background: #ffc107; }
+  kbd {
+    background: #2a2a3d; border: 1px solid #44445e; border-bottom-width: 2px;
+    border-radius: 5px; padding: 1px 7px; font-size: .8rem; font-family: inherit;
+  }
+  .hint { color: #7c7c94; font-size: .8rem; text-align: center; margin-bottom: 16px; }
+  .card {
+    background: #1b1b2a; border: 1px solid #2c2c40; border-radius: 12px;
+    padding: 14px 16px; margin-bottom: 12px;
+  }
+  .card h2 { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: #7c7c94; margin: 0 0 10px; }
+  .row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+  select {
+    flex: 1; background: #22222f; color: #e6e6f0; border: 1px solid #3a3a52;
+    border-radius: 8px; padding: 7px 10px; font-size: .88rem;
+  }
+  input[type=range] { flex: 1; accent-color: #7c5cff; }
+  .vol-label { width: 40px; text-align: right; font-size: .82rem; color: #b0b0cc; }
+  #log {
+    background: #10101a; border: 1px solid #2c2c40; border-radius: 8px;
+    padding: 8px 10px; height: 160px; overflow-y: auto;
+    font-family: Consolas, monospace; font-size: .72rem; color: #9a9ab5; white-space: pre-wrap;
+  }
+</style>
+</head>
+<body>
+  <h1>Highlight Reader</h1>
+  <div class="sub">Edge TTS &middot; reads whatever you highlight, anywhere</div>
+
+  <div class="pill" id="pill"><span class="dot"></span><span id="stateText">idle</span></div>
+  <div class="hint">Highlight text in any app, press <kbd>Alt</kbd>+<kbd>R</kbd> to read it,
+    press again to stop. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>Q</kbd> quits.</div>
+
+  <div class="card">
+    <h2>Voice</h2>
+    <div class="row"><select id="voice"></select></div>
+    <div class="row">
+      <span class="vol-label" style="width:auto">Volume</span>
+      <input type="range" id="volume" min="0" max="100" value="100" />
+      <span class="vol-label" id="volumeLabel">100%</span>
+    </div>
+  </div>
+
+  <div class="card" id="elevateCard" hidden>
+    <h2>Admin access</h2>
+    <div class="row">
+      <span style="flex:1; font-size:.82rem; color:#b0b0cc">
+        Running as a normal user &mdash; can't read selections in elevated windows
+        (Task Manager, apps launched "As administrator"), due to Windows UIPI.
+      </span>
+    </div>
+    <button id="elevateBtn" style="width:100%; margin-top:6px; background:#4a3f9e; color:#fff; border:none; border-radius:8px; padding:9px; font-size:.85rem; cursor:pointer;">
+      Restart as Administrator
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>Activity</h2>
+    <div id="log"></div>
+  </div>
+
+  <audio id="player"></audio>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

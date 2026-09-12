@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <!-- UIAutomationClient/Types ship in the Windows Desktop shared framework;
+         UseWPF pulls that framework in even though we don't use any WPF UI. -->
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <AssemblyName>SelectionHelper</AssemblyName>
+    <RootNamespace>SelectionHelper</RootNamespace>
+  </PropertyGroup>
+
+</Project>

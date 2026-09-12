@@ -1,0 +1,10 @@
+# Node / Electron
+node_modules/
+dist/
+
+# .NET build output for the selection helper
+selection-helper/bin/
+selection-helper/obj/
+
+# npm logs
+npm-debug.log*
